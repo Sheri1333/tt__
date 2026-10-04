@@ -1,0 +1,517 @@
+{
+  "schemaVersion": "1.0",
+  "funnelId": "workstyle-planner",
+  "version": 1,
+  "status": "published",
+  "locale": "en-AU",
+  "title": "Find your team's operating style",
+  "description": "A fictional recommendation funnel used only for the technical assignment.",
+  "session": {
+    "ttlHours": 72,
+    "persistAnswers": true,
+    "pinVersion": true,
+    "pinExperimentVariant": true
+  },
+  "progress": {
+    "countVisibleOnly": true,
+    "excludeTypes": [
+      "info",
+      "result"
+    ]
+  },
+  "experiment": {
+    "id": "question-order-and-result-framing-v1",
+    "assignment": "server",
+    "sticky": true,
+    "overrideQueryParam": "variant",
+    "variants": {
+      "A": {
+        "weight": 50,
+        "stepSequence": [
+          "intro",
+          "team_size",
+          "work_mode",
+          "priorities",
+          "timezone_span",
+          "office_days",
+          "async_maturity",
+          "tool_count",
+          "result"
+        ],
+        "stepOverrides": {},
+        "resultOverrides": {}
+      },
+      "B": {
+        "weight": 50,
+        "stepSequence": [
+          "intro",
+          "work_mode",
+          "timezone_span",
+          "team_size",
+          "async_maturity",
+          "priorities",
+          "office_days",
+          "tool_count",
+          "result"
+        ],
+        "stepOverrides": {
+          "intro": {
+            "content": {
+              "eyebrow": "2-minute team check",
+              "title": "How should your team really work?",
+              "body": "Answer a few questions to get a practical operating-style recommendation.",
+              "primaryActionLabel": "Show me"
+            }
+          },
+          "priorities": {
+            "content": {
+              "title": "What would make the biggest difference right now?",
+              "helperText": "Choose up to three outcomes."
+            }
+          }
+        },
+        "resultOverrides": {
+          "async_native": {
+            "title": "Your team is ready to reduce meetings",
+            "cta": {
+              "label": "See the 30-day action list",
+              "action": "expand_recommendation"
+            }
+          },
+          "hybrid_structured": {
+            "title": "Your hybrid model needs clearer rules",
+            "cta": {
+              "label": "See the 30-day action list",
+              "action": "expand_recommendation"
+            }
+          },
+          "office_core": {
+            "title": "Your office model can be more intentional",
+            "cta": {
+              "label": "See the 30-day action list",
+              "action": "expand_recommendation"
+            }
+          },
+          "balanced": {
+            "title": "Your team needs a shared operating baseline",
+            "cta": {
+              "label": "See the 30-day action list",
+              "action": "expand_recommendation"
+            }
+          }
+        }
+      }
+    }
+  },
+  "steps": {
+    "intro": {
+      "id": "intro",
+      "type": "info",
+      "content": {
+        "eyebrow": "Team operating-style check",
+        "title": "Build a work model your team can actually follow",
+        "body": "Answer a few questions and get a fictional recommendation for this technical exercise.",
+        "primaryActionLabel": "Start"
+      }
+    },
+    "team_size": {
+      "id": "team_size",
+      "type": "number",
+      "content": {
+        "title": "How many people are on the team?",
+        "helperText": "Include regular contractors who join team rituals."
+      },
+      "input": {
+        "name": "team_size",
+        "min": 1,
+        "max": 200,
+        "step": 1,
+        "unit": "people"
+      },
+      "validation": {
+        "required": true,
+        "messages": {
+          "required": "Enter the team size.",
+          "min": "The team must have at least one person.",
+          "max": "For this demo, enter a value up to 200."
+        }
+      }
+    },
+    "work_mode": {
+      "id": "work_mode",
+      "type": "single-select",
+      "content": {
+        "title": "Where does the team work most of the time?",
+        "helperText": "Choose the closest option."
+      },
+      "input": {
+        "name": "work_mode",
+        "options": [
+          {
+            "value": "remote",
+            "label": "Fully remote"
+          },
+          {
+            "value": "hybrid",
+            "label": "Hybrid"
+          },
+          {
+            "value": "office",
+            "label": "Mostly in the office"
+          }
+        ]
+      },
+      "validation": {
+        "required": true,
+        "messages": {
+          "required": "Select the team's main work mode."
+        }
+      }
+    },
+    "priorities": {
+      "id": "priorities",
+      "type": "multi-select",
+      "content": {
+        "title": "What should the operating model improve?",
+        "helperText": "Choose between one and three priorities."
+      },
+      "input": {
+        "name": "priorities",
+        "options": [
+          {
+            "value": "speed",
+            "label": "Decision speed"
+          },
+          {
+            "value": "focus",
+            "label": "Deep-focus time"
+          },
+          {
+            "value": "culture",
+            "label": "Team connection"
+          },
+          {
+            "value": "cost",
+            "label": "Lower operating cost"
+          },
+          {
+            "value": "onboarding",
+            "label": "Faster onboarding"
+          }
+        ]
+      },
+      "validation": {
+        "required": true,
+        "minSelections": 1,
+        "maxSelections": 3,
+        "messages": {
+          "minSelections": "Choose at least one priority.",
+          "maxSelections": "Choose no more than three priorities."
+        }
+      }
+    },
+    "timezone_span": {
+      "id": "timezone_span",
+      "type": "single-select",
+      "content": {
+        "title": "How far apart are your working hours?",
+        "helperText": "Think about the earliest and latest regular working times."
+      },
+      "input": {
+        "name": "timezone_span",
+        "options": [
+          {
+            "value": "same",
+            "label": "Mostly the same hours"
+          },
+          {
+            "value": "wide",
+            "label": "About 3–6 hours apart"
+          },
+          {
+            "value": "global",
+            "label": "More than 6 hours apart"
+          }
+        ]
+      },
+      "validation": {
+        "required": true,
+        "messages": {
+          "required": "Select the closest timezone range."
+        }
+      }
+    },
+    "office_days": {
+      "id": "office_days",
+      "type": "number",
+      "content": {
+        "title": "How many office days are expected each week?",
+        "helperText": "Enter the usual expectation, not occasional events."
+      },
+      "input": {
+        "name": "office_days",
+        "min": 0,
+        "max": 5,
+        "step": 1,
+        "unit": "days"
+      },
+      "validation": {
+        "required": true,
+        "messages": {
+          "required": "Enter the expected number of office days.",
+          "min": "Enter a value from 0 to 5.",
+          "max": "Enter a value from 0 to 5."
+        }
+      },
+      "visibleWhen": {
+        "answer": "work_mode",
+        "operator": "in",
+        "value": [
+          "hybrid",
+          "office"
+        ]
+      }
+    },
+    "async_maturity": {
+      "id": "async_maturity",
+      "type": "single-select",
+      "content": {
+        "title": "How are decisions documented today?",
+        "helperText": "Choose what happens most often."
+      },
+      "input": {
+        "name": "async_maturity",
+        "options": [
+          {
+            "value": "low",
+            "label": "Mostly discussed in meetings"
+          },
+          {
+            "value": "medium",
+            "label": "Important decisions are documented"
+          },
+          {
+            "value": "high",
+            "label": "Written context is the default"
+          }
+        ]
+      },
+      "validation": {
+        "required": true,
+        "messages": {
+          "required": "Select the closest description."
+        }
+      }
+    },
+    "tool_count": {
+      "id": "tool_count",
+      "type": "number",
+      "content": {
+        "title": "How many tools does the team use every week?",
+        "helperText": "Count messaging, project, documentation and meeting tools."
+      },
+      "input": {
+        "name": "tool_count",
+        "min": 1,
+        "max": 30,
+        "step": 1,
+        "unit": "tools"
+      },
+      "validation": {
+        "required": true,
+        "messages": {
+          "required": "Enter the number of tools.",
+          "min": "Enter a value of at least 1.",
+          "max": "For this demo, enter a value up to 30."
+        }
+      }
+    },
+    "result": {
+      "id": "result",
+      "type": "result",
+      "content": {
+        "loadingTitle": "Building your recommendation…",
+        "errorTitle": "We could not build the recommendation",
+        "retryLabel": "Try again"
+      },
+      "resultSource": "resultRules"
+    }
+  },
+  "resultRules": [
+    {
+      "resultId": "async_native",
+      "when": {
+        "any": [
+          {
+            "all": [
+              {
+                "answer": "work_mode",
+                "operator": "eq",
+                "value": "remote"
+              },
+              {
+                "answer": "timezone_span",
+                "operator": "in",
+                "value": [
+                  "wide",
+                  "global"
+                ]
+              }
+            ]
+          },
+          {
+            "answer": "async_maturity",
+            "operator": "eq",
+            "value": "high"
+          }
+        ]
+      }
+    },
+    {
+      "resultId": "hybrid_structured",
+      "when": {
+        "answer": "work_mode",
+        "operator": "eq",
+        "value": "hybrid"
+      }
+    },
+    {
+      "resultId": "office_core",
+      "when": {
+        "answer": "work_mode",
+        "operator": "eq",
+        "value": "office"
+      }
+    }
+  ],
+  "defaultResultId": "balanced",
+  "results": {
+    "async_native": {
+      "id": "async_native",
+      "title": "Async-native",
+      "summary": "Your team will benefit from written context, fewer mandatory meetings and explicit response windows.",
+      "recommendations": [
+        "Move routine status updates to written check-ins.",
+        "Define response-time expectations by channel.",
+        "Record decisions in one searchable place."
+      ],
+      "cta": {
+        "label": "View the action list",
+        "action": "expand_recommendation"
+      }
+    },
+    "hybrid_structured": {
+      "id": "hybrid_structured",
+      "title": "Structured hybrid",
+      "summary": "Your team needs a clear reason for office days and equal access to decisions for remote participants.",
+      "recommendations": [
+        "Give each office day a defined purpose.",
+        "Document decisions before the end of the day.",
+        "Avoid meetings where only part of the team can participate."
+      ],
+      "cta": {
+        "label": "View the action list",
+        "action": "expand_recommendation"
+      }
+    },
+    "office_core": {
+      "id": "office_core",
+      "title": "Office-led with focus protection",
+      "summary": "Your team can keep an office-led model while protecting uninterrupted work and documenting key decisions.",
+      "recommendations": [
+        "Create meeting-free focus blocks.",
+        "Use the office for collaboration rather than status reporting.",
+        "Publish decisions for people who were not in the room."
+      ],
+      "cta": {
+        "label": "View the action list",
+        "action": "expand_recommendation"
+      }
+    },
+    "balanced": {
+      "id": "balanced",
+      "title": "Balanced baseline",
+      "summary": "Your answers do not point to one dominant model. Start with shared rules and measure what improves.",
+      "recommendations": [
+        "Agree where decisions are recorded.",
+        "Define which work requires a meeting.",
+        "Review the model after 30 days."
+      ],
+      "cta": {
+        "label": "View the action list",
+        "action": "expand_recommendation"
+      }
+    }
+  },
+  "events": {
+    "baseProperties": [
+      "event_id",
+      "session_id",
+      "client_timestamp",
+      "funnel_id",
+      "funnel_version",
+      "experiment_id",
+      "variant",
+      "step_id",
+      "utm_source",
+      "utm_medium",
+      "utm_campaign"
+    ],
+    "allowed": [
+      {
+        "name": "session_started",
+        "trigger": "A server-side session is created.",
+        "properties": []
+      },
+      {
+        "name": "step_viewed",
+        "trigger": "A visible step is rendered.",
+        "properties": [
+          "step_type",
+          "visible_step_index",
+          "visible_step_count"
+        ]
+      },
+      {
+        "name": "answer_submitted",
+        "trigger": "A valid answer is submitted.",
+        "properties": [
+          "answer_kind"
+        ]
+      },
+      {
+        "name": "step_completed",
+        "trigger": "Navigation advances from a valid interactive step.",
+        "properties": [
+          "next_step_id"
+        ]
+      },
+      {
+        "name": "back_clicked",
+        "trigger": "The user navigates to a previous visible step.",
+        "properties": [
+          "destination_step_id"
+        ]
+      },
+      {
+        "name": "result_viewed",
+        "trigger": "A result is rendered.",
+        "properties": [
+          "result_id"
+        ]
+      },
+      {
+        "name": "cta_clicked",
+        "trigger": "The primary result CTA is clicked.",
+        "properties": [
+          "result_id",
+          "action"
+        ]
+      }
+    ],
+    "privacy": {
+      "storeRawAnswers": false,
+      "allowAnswerKinds": true
+    }
+  }
+}
