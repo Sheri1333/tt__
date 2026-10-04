@@ -1,0 +1,16 @@
+# One-click deploy on Render (Blueprint). SQLite lives on a persistent disk.
+services:
+  - type: web
+    name: funnel-platform
+    runtime: docker
+    plan: starter
+    healthCheckPath: /api/health
+    envVars:
+      - key: ADMIN_TOKEN
+        generateValue: true
+      - key: DB_FILE
+        value: /data/funnel.db
+    disk:
+      name: data
+      mountPath: /data
+      sizeGB: 1
