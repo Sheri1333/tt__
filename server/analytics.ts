@@ -120,6 +120,9 @@ export function stepFunnel(rows: EventRow[], sequence: { id: string; type: strin
 
   for (const r of rows) {
     sessions.add(r.session_id);
+    // The server returns the first step together with the new session, so a started
+    // session has reached step 0 even if its first step_viewed never arrived.
+    if (!reached[0].has(r.session_id)) bump(r.session_id, 0);
     const idx = r.step_id ? pos.get(r.step_id) : undefined;
     if (r.name === 'result_viewed' || r.name === 'cta_clicked') {
       if (resultIdx >= 0) bump(r.session_id, resultIdx);

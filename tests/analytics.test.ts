@@ -45,7 +45,7 @@ describe('analytics aggregation', () => {
 
   it('computes per-step reach, conversion and drop-off robustly', () => {
     const steps = Object.fromEntries(stepFunnel(rows, seq).map((s) => [s.stepId, s]));
-    expect(steps.intro.reached).toBe(4); // s5 never sent intro view
+    expect(steps.intro.reached).toBe(5); // s5 never sent an intro view, but a started session has reached step 0
     expect(steps.q1.reached).toBe(3);
     expect(steps.q1.views).toBe(6); // raw views, but 3 unique sessions
     expect(steps.q1.droppedHere).toBe(1); // s3
@@ -58,6 +58,13 @@ describe('analytics aggregation', () => {
     expect(steps.result.reached).toBe(3);
     const totalDropped = Object.values(steps).reduce((a, s) => a + s.droppedHere, 0);
     expect(totalDropped + steps.result.reached).toBe(5); // every started session is either dropped somewhere or finished
+  });
+
+  it('a session with only session_started counts as dropped on the first step', () => {
+    const steps = stepFunnel([...rows, ev('s6', 'session_started')], seq);
+    expect(steps[0].reached).toBe(6);
+    expect(steps[0].droppedHere).toBe(2); // s4 + s6
+    expect(steps.reduce((a, s) => a + s.droppedHere, 0) + steps[steps.length - 1].reached).toBe(6);
   });
 
   it('is invariant to event order and duplicate deliveries', () => {
